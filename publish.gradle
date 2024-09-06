@@ -49,9 +49,9 @@ if (secretPropsFile.exists()) {
 }
 
 publishing {
+    def prjName = project.name.split(":").last()
     publications {
         release(MavenPublication) {
-            def prjName = project.name.split(":").last()
             groupId project.ext.sdk["group"]
             artifactId project.ext.sdk[prjName]["artifact"]
             version project.ext.sdk[prjName]["version"]
@@ -126,7 +126,7 @@ publishing {
             name = ''
             def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = libraryVersion.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url = project.ext.sdk[prjName]["version"].endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
                 username ossrhUsername
                 password ossrhPassword
