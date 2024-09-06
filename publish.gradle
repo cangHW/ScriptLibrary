@@ -92,6 +92,7 @@ publishing {
                     url = project.ext.sdk["siteUrl"]
                 }
                 withXml {
+                    def map = []
                     def containers = [configurations.api, configurations.implementation]
                     def dependenciesNode = asNode().appendNode('dependencies')
                     containers.each { container ->
