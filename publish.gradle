@@ -22,8 +22,8 @@ if (project.hasProperty("android")) {
         from sourceSets.main.allSource
     }
 
-    Task javadoc =  tasks.named("javadoc").get()
-    Task javadocJar = tasks.register('javadocJar', Jar){
+    Task javadoc = tasks.named("javadoc").get()
+    Task javadocJar = tasks.register('javadocJar', Jar) {
         archiveClassifier.set('javadoc')
         from javadoc
     }.get()
@@ -103,7 +103,7 @@ publishing {
                                 dependencyNode.appendNode('artifactId', project.ext.sdk[dependency.name]["artifact"])
                                 dependencyNode.appendNode('version', project.ext.sdk[dependency.name]["version"])
                                 dependencyNode.appendNode('scope', container.name)
-                            } else if ((dependency.group != null && dependency.group != "unspecified") && (dependency.name != null && dependency.name != "unspecified") && dependency.version != null) {
+                            } else if ((dependency.group != NULL && dependency.group != EMPTY) && (dependency.name != NULL && dependency.name != EMPTY) && (dependency.version != NULL && dependency.name != EMPTY)) {
                                 def key = dependency.group + ":" + dependency.name + ":" + dependency.version
                                 if (!map.contains(key)) {
                                     map.add(key)
