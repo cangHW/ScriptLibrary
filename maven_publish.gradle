@@ -56,7 +56,9 @@ publishing {
             artifactId project.ext.sdk[prjName]["artifact"]
             version project.ext.sdk[prjName]["version"]
 
-            artifact sourcesJar
+            if (project.ext.sdk[prjName]["source"]){
+                artifact sourcesJar
+            }
             if (project.hasProperty("android")) {
                 artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             } else {
@@ -125,8 +127,8 @@ publishing {
     repositories {
         maven {
             name = ''
-            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            def releasesRepoUrl = project.ext.sdk["release_url"]
+            def snapshotsRepoUrl = project.ext.sdk["snapshot_url"]
             url = project.ext.sdk[prjName]["version"].endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
                 username ossrhUsername
