@@ -18,7 +18,7 @@ void createUploadTask(String dependsTaskName, String srcTaskName){
     Task upload = tasks.register(srcTaskName).get()
     upload.setGroup("upload")
     upload.doLast {
-        println("上传成功")
+        println("上传结束")
     }
     upload.dependsOn(task)
 }

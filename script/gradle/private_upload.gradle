@@ -23,7 +23,7 @@ publishing {
             if (project.ext.sdk[prjName]["source"]){
                 artifact sourcesJar
             }
-            artifact("$buildDir/outputs/aar/${prjName}-release.aar")
+            artifact("$projectDir/build/outputs/aar/${prjName}-release.aar")
 
             pom.withXml {
                 def map = []
@@ -60,18 +60,17 @@ publishing {
 
     repositories {
         maven {
-            url project.ext.sdk["snapshot_url"]
+            def releasesRepoUrl = project.ext.sdk["release_url"]
+            def snapshotsRepoUrl = project.ext.sdk["snapshot_url"]
+            url = project.ext.sdk[prjName]["version"].endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
                 username project.ext.sdk[prjName]["username"]
                 password project.ext.sdk[prjName]["password"]
             }
         }
+
         maven {
-            url project.ext.sdk["release_url"]
-            credentials {
-                username project.ext.sdk[prjName]["username"]
-                password project.ext.sdk[prjName]["password"]
-            }
+            url = uri('../Repo')
         }
     }
 }

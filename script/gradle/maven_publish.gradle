@@ -60,10 +60,10 @@ publishing {
                 artifact sourcesJar
             }
             if (project.hasProperty("android")) {
-                artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+                artifact("$projectDir/build/outputs/aar/${project.getName()}-release.aar")
             } else {
                 artifact javadocJar
-                artifact("$buildDir/libs/${project.getName()}.jar")
+                artifact("$projectDir/build/libs/${project.getName()}.jar")
             }
 
             pom {
@@ -126,7 +126,6 @@ publishing {
     }
     repositories {
         maven {
-            name = ''
             def releasesRepoUrl = project.ext.sdk["release_url"]
             def snapshotsRepoUrl = project.ext.sdk["snapshot_url"]
             url = project.ext.sdk[prjName]["version"].endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
@@ -137,7 +136,7 @@ publishing {
         }
 
         maven {
-            url = uri('../repo')
+            url = uri('../Repo')
         }
     }
 }
