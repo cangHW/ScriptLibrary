@@ -79,7 +79,7 @@ ext {
             ],
             WebViewInfo    : [
                     artifact          : "Service-Webview",
-                    version           : "0.0.0.5",
+                    version           : "0.0.0.6",
                     source            : false,
                     libraryName       : "Android cloud sdk",
                     libraryDescription: "The perfect framework for Android"
