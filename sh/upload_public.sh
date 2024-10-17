@@ -1,11 +1,11 @@
 
 #准备上传的类库 module
-upArray=(
+upArray = (
 #  # 网络库
 #  ":ApiHttpSDK:ApiHttpBase"
 )
 
-type_params="r"
+type_params = "r"
 
 for element in "${upArray[@]}"
 do

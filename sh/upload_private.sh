@@ -1,11 +1,11 @@
 
 #准备上传的类库 module
-upArray=(
+upArray = (
 #  # 网络库
 #  ":ApiHttpSDK:ApiHttpBase"
 )
 
-dir_path="Plugins/upload/file"
+dir_path = "Plugins/upload/file"
 rm -r "$dir_path"
 
 for element in "${upArray[@]}"
@@ -13,7 +13,7 @@ do
   ./gradlew "$element:findDependencies" < /dev/null
 done
 
-type_params="r"
+type_params = "r"
 
 for file in "./$dir_path"/*
 do
