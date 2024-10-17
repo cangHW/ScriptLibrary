@@ -21,7 +21,7 @@ Task findDependencies = tasks.register("findDependencies").get().doLast {
     localMap[project.name] = project.getPath()
     listDependencies(project, localMap)
 
-    File file = new File(project.rootDir.absolutePath, "ScriptLibrary/upload/" + project.name + ".txt")
+    File file = new File(project.rootDir.absolutePath, "Plugins/upload/" + project.name + ".txt")
     file.getParentFile().mkdirs()
     file.delete()
     file.createNewFile()
