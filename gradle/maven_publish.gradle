@@ -136,7 +136,7 @@ publishing {
         }
 
         maven {
-            url = uri('../Repo')
+            url = uri("${rootDir}/Repo")
         }
     }
 }
