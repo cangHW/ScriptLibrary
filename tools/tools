@@ -1,0 +1,5 @@
+ 1、查看当前 module 依赖关系，并导出到 dependencies.txt 文件
+ // mac
+ mkdir -p Plugins/tools/dependency && ./gradlew app:dependencies > Plugins/tools/dependency/dependencies.txt
+ //windows
+ mkdir "Plugins\tools\dependency" 2>NUL && gradlew app:dependencies > "Plugins\tools\dependency\dependencies.txt"
