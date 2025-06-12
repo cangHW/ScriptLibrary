@@ -1,9 +1,8 @@
-import org.gradle.api.internal.artifacts.dependencies.DefaultProjectDependency
+
+apply from: new File(project.rootDir.absolutePath, "Plugins/script/gradle/constants.gradle").absolutePath
 
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
-def EMPTY = 'unspecified'
-def NULL = null
 
 if (project.hasProperty("android")) {
     // Android libraries
@@ -56,7 +55,7 @@ publishing {
             artifactId project.ext.sdk[prjName]["artifact"]
             version project.ext.sdk[prjName]["version"]
 
-            if (project.ext.sdk[prjName]["source"]){
+            if (project.ext.sdk[prjName]["source"]) {
                 artifact sourcesJar
             }
             if (project.hasProperty("android")) {
@@ -94,31 +93,14 @@ publishing {
                     url = project.ext.sdk["siteUrl"]
                 }
                 withXml {
-                    def map = []
-                    def containers = [configurations.api, configurations.implementation]
                     def dependenciesNode = asNode().appendNode('dependencies')
-                    containers.each { container ->
-                        container.dependencies.each { dependency ->
-                            println("pom 清单包含：   ${dependency.group}:${dependency.name}:${dependency.version}")
-                            if (dependency instanceof DefaultProjectDependency) {
-                                def dependencyNode = dependenciesNode.appendNode('dependency')
-                                dependencyNode.appendNode('groupId', project.ext.sdk["group"])
-                                dependencyNode.appendNode('artifactId', project.ext.sdk[dependency.name]["artifact"])
-                                dependencyNode.appendNode('version', project.ext.sdk[dependency.name]["version"])
-                                dependencyNode.appendNode('scope', container.name)
-                            } else if ((dependency.group != NULL && dependency.group != EMPTY) && (dependency.name != NULL && dependency.name != EMPTY) && (dependency.version != NULL && dependency.name != EMPTY)) {
-                                def key = dependency.group + ":" + dependency.name + ":" + dependency.version
-                                if (!map.contains(key)) {
-                                    map.add(key)
-                                    def dependencyNode = dependenciesNode.appendNode('dependency')
-                                    dependencyNode.appendNode('groupId', dependency.group)
-                                    dependencyNode.appendNode('artifactId', dependency.name)
-                                    dependencyNode.appendNode('version', dependency.version)
-                                    dependencyNode.appendNode('scope', container.name)
-                                }
-                            }
 
-                        }
+                    rootProject.parseDependencyWhenCreatePom(project) { group, name, version, scope ->
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', group)
+                        dependencyNode.appendNode('artifactId', name)
+                        dependencyNode.appendNode('version', version)
+                        dependencyNode.appendNode('scope', scope)
                     }
                 }
             }
