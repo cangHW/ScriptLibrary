@@ -23,9 +23,9 @@ do
     do
 #     echo $line
       if [ "$1" = $type_params ]; then
-          ./gradlew "$line:publishUploadPublicationToMaven2Repository" < /dev/null
+          ./gradlew "$line:uploadRemote" < /dev/null
       else
-          ./gradlew "$line:publishUploadPublicationToMavenRepository" < /dev/null
+          ./gradlew "$line:uploadLocal" < /dev/null
       fi
     done < "$file"
   fi
