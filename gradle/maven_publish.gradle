@@ -108,6 +108,7 @@ publishing {
     }
     repositories {
         maven {
+            name = 'remote'
             def releasesRepoUrl = project.ext.sdk["release_url"]
             def snapshotsRepoUrl = project.ext.sdk["snapshot_url"]
             url = project.ext.sdk[prjName]["version"].endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
@@ -118,6 +119,7 @@ publishing {
         }
 
         maven {
+            name = 'local'
             url = uri("${rootDir}/Repo")
         }
     }

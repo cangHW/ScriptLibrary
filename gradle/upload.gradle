@@ -8,8 +8,8 @@ if (project.hasProperty("android")) {
     assemble.dependsOn(clean)
 }
 
-createUploadTask("publishReleasePublicationToMavenRepository", "uploadRemote")
-createUploadTask("publishReleasePublicationToMaven2Repository", "uploadLocal")
+createUploadTask("publishReleasePublicationToRemoteRepository", "uploadRemote")
+createUploadTask("publishReleasePublicationToLocalRepository", "uploadLocal")
 
 void createUploadTask(String dependsTaskName, String srcTaskName){
     Task task = tasks.named(dependsTaskName).get()

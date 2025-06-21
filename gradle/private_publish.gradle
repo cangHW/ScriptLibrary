@@ -38,6 +38,21 @@ Task findDependencies = tasks.register("findDependencies").get().doLast {
 findDependencies.setGroup(group_config)
 
 
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+    println "Found secret props file, loading props"
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        ext[name] = value
+    }
+} else {
+    println "No props file, loading env vars"
+}
+
 
 // 2、构建并上传 maven
 apply from: new File(project.rootDir.absolutePath, "Plugins/script/gradle/constants.gradle").absolutePath
@@ -85,16 +100,18 @@ publishing {
 
     repositories {
         maven {
+            name = 'remote'
             def releasesRepoUrl = project.ext.sdk["release_url"]
             def snapshotsRepoUrl = project.ext.sdk["snapshot_url"]
             url = project.ext.sdk[prjName]["version"].endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
-                username project.ext.sdk[prjName]["username"]
-                password project.ext.sdk[prjName]["password"]
+                username ossrhUsername
+                password ossrhPassword
             }
         }
 
         maven {
+            name = 'local'
             url = uri("${rootDir}/Repo")
         }
     }
