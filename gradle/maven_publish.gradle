@@ -116,6 +116,7 @@ publishing {
                 username ossrhUsername
                 password ossrhPassword
             }
+            allowInsecureProtocol(true)
         }
 
         maven {
